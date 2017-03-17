@@ -1,4 +1,4 @@
-package com.lucatic.TiendaCamisetas.model;
+package com.lucatic.tiendacamisetas.model;
 
 public enum Genero {
 	HOMBRE,

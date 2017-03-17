@@ -1,4 +1,4 @@
-package com.lucatic.TiendaCamisetas.dao;
+package com.lucatic.tiendacamisetas.dao;
 
 public class TallaDAOFactory {
 

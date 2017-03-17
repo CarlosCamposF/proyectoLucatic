@@ -1,6 +1,6 @@
-package com.lucatic.TiendaCamisetas.beans;
+package com.lucatic.tiendacamisetas.beans;
 
-import com.lucatic.TiendaCamisetas.model.Rol;
+import com.lucatic.tiendacamisetas.model.Rol;
 
 public class Usuario {
 	

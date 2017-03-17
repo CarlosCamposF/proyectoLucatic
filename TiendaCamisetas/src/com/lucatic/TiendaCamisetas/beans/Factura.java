@@ -1,9 +1,9 @@
-package com.lucatic.TiendaCamisetas.beans;
+package com.lucatic.tiendacamisetas.beans;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import com.lucatic.TiendaCamisetas.model.TipoPago;
+import com.lucatic.tiendacamisetas.model.TipoPago;
 
 public class Factura {
 	

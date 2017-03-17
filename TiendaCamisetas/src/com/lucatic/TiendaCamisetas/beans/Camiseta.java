@@ -1,6 +1,6 @@
-package com.lucatic.TiendaCamisetas.beans;
+package com.lucatic.tiendacamisetas.beans;
 
-import com.lucatic.TiendaCamisetas.model.*;
+import com.lucatic.tiendacamisetas.model.*;
 
 public class Camiseta extends Producto{
 	private int idCamiseta;

@@ -1,5 +1,5 @@
-package com.lucatic.TiendaCamisetas.beans;
-import com.lucatic.TiendaCamisetas.model.*;
+package com.lucatic.tiendacamisetas.beans;
+import com.lucatic.tiendacamisetas.model.*;
 public abstract class Producto {
 	private int idProducto;
 	private String descripcion;

@@ -1,6 +1,6 @@
-package com.lucatic.TiendaCamisetas.dao;
+package com.lucatic.tiendacamisetas.dao;
 
-import com.lucatic.TiendaCamisetas.model.Talla;
+import com.lucatic.tiendacamisetas.model.Talla;
 
 public interface TallaDAO extends AutoCloseable {
 

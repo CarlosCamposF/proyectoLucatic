@@ -1,19 +1,19 @@
-package com.lucatic.TiendaCamisetas.control;
+package com.lucatic.tiendacamisetas.control;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.lucatic.TiendaCamisetas.dao.DAOException;
-import com.lucatic.TiendaCamisetas.dao.TallaDAO;
-import com.lucatic.TiendaCamisetas.dao.TallaDAOFactory;
-import com.lucatic.TiendaCamisetas.model.Talla;
+import com.lucatic.tiendacamisetas.dao.DAOException;
+import com.lucatic.tiendacamisetas.dao.TallaDAO;
+import com.lucatic.tiendacamisetas.dao.TallaDAOFactory;
+import com.lucatic.tiendacamisetas.model.Talla;
 
 
 public class TallaTestInteractive {
 
     public static void main(String[] args) {
-        TallaDAOFactory factory = new TallaDAOFactory();
+        /*TallaDAOFactory factory = new TallaDAOFactory();
 
         boolean timeToQuit = false;
         try (TallaDAO dao = factory.createTallaDAO();
@@ -167,6 +167,6 @@ public class TallaTestInteractive {
 
         // Create an Talla object
         tall = new Talla(id, nombre);
-        return tall;
+        return tall;*/
     }
 }

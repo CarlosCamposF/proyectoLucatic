@@ -1,4 +1,4 @@
-package com.lucatic.TiendaCamisetas.beans;
+package com.lucatic.tiendacamisetas.beans;
 
 public class Detalle {
 
