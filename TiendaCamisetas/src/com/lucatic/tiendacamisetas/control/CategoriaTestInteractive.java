@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import com.lucatic.tiendacamisetas.dao.CategoriaDAO;
 import com.lucatic.tiendacamisetas.dao.CategoriaDAOFactory;
 import com.lucatic.tiendacamisetas.dao.DAOException;
-import com.lucatic.tiendacamisetas.menu.MenuPrincipal;
 import com.lucatic.tiendacamisetas.model.Categoria;
 
 public class CategoriaTestInteractive {
@@ -15,11 +14,10 @@ public class CategoriaTestInteractive {
 	public void IniciarMenuCategoria() {
 		CategoriaDAOFactory factory = new CategoriaDAOFactory();
 		boolean timeToQuitCategoria = false;
-		try (CategoriaDAO dao = factory.createCategoriaDAO();
-				BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
+		try (CategoriaDAO dao = factory.createCategoriaDAO()) {
 			do {
 				try {
-					timeToQuitCategoria = executeMenuCategoria(in, dao);
+					timeToQuitCategoria = executeMenuCategoria(dao);
 				} catch (DAOException e) {
 					System.out.println("Error " + e.getClass().getName());
 					System.out.println("Message: " + e.getMessage());
@@ -35,16 +33,17 @@ public class CategoriaTestInteractive {
 	}
 
 	// MENÚ***************************************************************************
-	public static boolean executeMenuCategoria(BufferedReader in, CategoriaDAO dao) throws IOException, DAOException {
+	public static boolean executeMenuCategoria(CategoriaDAO dao) throws IOException, DAOException {
 		int idCategoria;
 		Categoria cat;
 		String action;
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 		System.out.println("\n\n----Tabla Categoría----");
 		System.out.println("\n\n[C]rear | [E]ncontrar | [M]odificar | [B]orrar | [L]istar | [A]tras: \n");
 		action = in.readLine();
 		if ((action.length() == 0) || action.toUpperCase().charAt(0) == 'A') {
-          new MenuPrincipal().IniciarPrograma();  
+            
 			return true;
 		}
 

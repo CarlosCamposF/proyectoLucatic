@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import com.lucatic.tiendacamisetas.dao.DAOException;
 import com.lucatic.tiendacamisetas.dao.TipoPagoDAO;
 import com.lucatic.tiendacamisetas.dao.TipoPagoDAOFactory;
-import com.lucatic.tiendacamisetas.menu.MenuPrincipal;
 import com.lucatic.tiendacamisetas.model.TipoPago;
 
 public class TipoPagoTestInteractive {
@@ -15,11 +14,10 @@ public class TipoPagoTestInteractive {
 	public void IniciarMenuTipoPago() {
 		TipoPagoDAOFactory factory = new TipoPagoDAOFactory();
 		boolean timeToQuitTipoPago = false;
-		try (TipoPagoDAO dao = factory.createTipoPagoDAO();
-				BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
+		try (TipoPagoDAO dao = factory.createTipoPagoDAO()) {
 			do {
 				try {
-					timeToQuitTipoPago = executeMenuTipoPago(in, dao);
+					timeToQuitTipoPago = executeMenuTipoPago(dao);
 				} catch (DAOException e) {
 					System.out.println("Error " + e.getClass().getName());
 					System.out.println("Message: " + e.getMessage());
@@ -35,16 +33,17 @@ public class TipoPagoTestInteractive {
 	}
 
 	// MENÚ***************************************************************************
-	public static boolean executeMenuTipoPago(BufferedReader in, TipoPagoDAO dao) throws IOException, DAOException {
+	public static boolean executeMenuTipoPago(TipoPagoDAO dao) throws IOException, DAOException {
 		int idTipoPago;
 		TipoPago tip;
 		String action;
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 		System.out.println("\n\n----Tabla Tipo de Pago----");
 		System.out.println("\n\n[C]rear | [E]ncontrar | [M]odificar | [B]orrar | [L]istar | [A]tras: \n");
 		action = in.readLine();
 		if ((action.length() == 0) || action.toUpperCase().charAt(0) == 'A') {
-          new MenuPrincipal().IniciarPrograma();  
+           
 			return true;
 		}
 

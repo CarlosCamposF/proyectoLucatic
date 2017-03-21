@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import com.lucatic.tiendacamisetas.dao.DAOException;
 import com.lucatic.tiendacamisetas.dao.TallaDAO;
 import com.lucatic.tiendacamisetas.dao.TallaDAOFactory;
-import com.lucatic.tiendacamisetas.menu.MenuPrincipal;
 import com.lucatic.tiendacamisetas.model.Talla;
 
 public class TallaTestInteractive {
@@ -16,11 +15,10 @@ public class TallaTestInteractive {
 		TallaDAOFactory factory = new TallaDAOFactory();
 
 		boolean timeToQuit = false;
-		try (TallaDAO dao = factory.createTallaDAO();
-				BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
+		try (TallaDAO dao = factory.createTallaDAO()) {
 			do {
 				try {
-					timeToQuit = executeMenu(in, dao);
+					timeToQuit = executeMenu(dao);
 				} catch (DAOException e) {
 					System.out.println("Error " + e.getClass().getName());
 					System.out.println("Message: " + e.getMessage());
@@ -36,16 +34,17 @@ public class TallaTestInteractive {
 	}
 
 	// MENÚ***************************************************************************
-	public static boolean executeMenu(BufferedReader in, TallaDAO dao) throws IOException, DAOException {
+	public static boolean executeMenu(TallaDAO dao) throws IOException, DAOException {
 		int idtalla;
 		Talla tall;
 		String action;
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 		System.out.println("\n\n----Tabla Talla----");
 		System.out.println("\n\n[C]rear | [E]ncontrar | [M]odificar | [B]orrar | [L]istar | [A]tras: \n");
 		action = in.readLine();
 		if ((action.length() == 0) || action.toUpperCase().charAt(0) == 'A') {
-			new MenuPrincipal().IniciarPrograma();
+			
 			return true;
 		}
 

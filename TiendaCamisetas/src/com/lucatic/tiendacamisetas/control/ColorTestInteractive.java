@@ -14,11 +14,10 @@ public class ColorTestInteractive {
 	public void IniciarMenuColor() {
 		ColorDAOFactory factory = new ColorDAOFactory();
 		boolean timeToQuitColor = false;
-		try (ColorDAO dao = factory.createColorDAO();
-				BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
+		try (ColorDAO dao = factory.createColorDAO()) {
 			do {
 				try {
-					timeToQuitColor = executeMenuColor(in, dao);
+					timeToQuitColor = executeMenuColor(dao);
 				} catch (DAOException e) {
 					System.out.println("Error " + e.getClass().getName());
 					System.out.println("Message: " + e.getMessage());
@@ -34,11 +33,11 @@ public class ColorTestInteractive {
 	}
 
 	// MENÚ***************************************************************************
-	public static boolean executeMenuColor(BufferedReader in, ColorDAO dao) throws IOException, DAOException {
+	public static boolean executeMenuColor(ColorDAO dao) throws IOException, DAOException {
 		int idColor;
 		Color col;
 		String action;
-
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("\n\n----Tabla Color----");
 		System.out.println("\n\n[C]rear | [E]ncontrar | [M]odificar | [B]orrar | [L]istar | [A]tras: \n");
 		//******************  ----ERROR---  **********************

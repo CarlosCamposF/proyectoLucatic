@@ -12,11 +12,11 @@ public class MenuPrincipal {
 	public void IniciarPrograma() {
 
 		boolean timeToQuit = false;
-		try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
+		try {
 			do {
 				try {
 					
-					timeToQuit = executeMenu(in);
+					timeToQuit = executeMenu();
 
 				} catch (DAOException e) {
 
@@ -33,10 +33,10 @@ public class MenuPrincipal {
 		}
 	}
 
-	public static boolean executeMenu(BufferedReader in) throws IOException, DAOException {
-
+	public static boolean executeMenu() throws IOException, DAOException {
 		String action;
-
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        
 		System.out.println("\n----Base de Datos de la Tienda----");
 		System.out.println("\n\n[C]olor | [T]alla | [G]énero | C[A]tegoría | Tipo de [P]ago | [R]ol | [S]alir: ");
 		action = in.readLine();

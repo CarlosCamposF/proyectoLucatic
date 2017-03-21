@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import com.lucatic.tiendacamisetas.dao.DAOException;
 import com.lucatic.tiendacamisetas.dao.RolDAO;
 import com.lucatic.tiendacamisetas.dao.RolDAOFactory;
-import com.lucatic.tiendacamisetas.menu.MenuPrincipal;
 import com.lucatic.tiendacamisetas.model.Rol;
 
 public class RolTestInteractive {
@@ -15,11 +14,10 @@ public class RolTestInteractive {
 	public void IniciarMenuRol() {
 		RolDAOFactory factory = new RolDAOFactory();
 		boolean timeToQuitRol = false;
-		try (RolDAO dao = factory.createRolDAO();
-				BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
+		try (RolDAO dao = factory.createRolDAO()) {
 			do {
 				try {
-					timeToQuitRol = executeMenuRol(in, dao);
+					timeToQuitRol = executeMenuRol(dao);
 				} catch (DAOException e) {
 					System.out.println("Error " + e.getClass().getName());
 					System.out.println("Message: " + e.getMessage());
@@ -35,16 +33,17 @@ public class RolTestInteractive {
 	}
 
 	// MENÚ***************************************************************************
-	public static boolean executeMenuRol(BufferedReader in, RolDAO dao) throws IOException, DAOException {
+	public static boolean executeMenuRol(RolDAO dao) throws IOException, DAOException {
 		int idRol;
 		Rol rol;
 		String action;
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 		System.out.println("\n\n----Tabla Rol----");
 		System.out.println("\n\n[C]rear | [E]ncontrar | [M]odificar | [B]orrar | [L]istar | [A]tras: \n");
 		action = in.readLine();
 		if ((action.length() == 0) || action.toUpperCase().charAt(0) == 'A') {
-          new MenuPrincipal().IniciarPrograma();  
+            
 			return true;
 		}
 

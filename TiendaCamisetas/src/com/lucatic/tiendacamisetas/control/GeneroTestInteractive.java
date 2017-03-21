@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import com.lucatic.tiendacamisetas.dao.DAOException;
 import com.lucatic.tiendacamisetas.dao.GeneroDAO;
 import com.lucatic.tiendacamisetas.dao.GeneroDAOFactory;
-import com.lucatic.tiendacamisetas.menu.MenuPrincipal;
 import com.lucatic.tiendacamisetas.model.Genero;
 
 public class GeneroTestInteractive {
@@ -15,11 +14,10 @@ public class GeneroTestInteractive {
 	public void IniciarMenuGenero() {
 		GeneroDAOFactory factory = new GeneroDAOFactory();
 		boolean timeToQuitGenero = false;
-		try (GeneroDAO dao = factory.createGeneroDAO();
-				BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
+		try (GeneroDAO dao = factory.createGeneroDAO()) {
 			do {
 				try {
-					timeToQuitGenero = executeMenuGenero(in, dao);
+					timeToQuitGenero = executeMenuGenero(dao);
 				} catch (DAOException e) {
 					System.out.println("Error " + e.getClass().getName());
 					System.out.println("Message: " + e.getMessage());
@@ -35,16 +33,17 @@ public class GeneroTestInteractive {
 	}
 
 	// MENÚ***************************************************************************
-	public static boolean executeMenuGenero(BufferedReader in, GeneroDAO dao) throws IOException, DAOException {
+	public static boolean executeMenuGenero(GeneroDAO dao) throws IOException, DAOException {
 		int idGenero;
 		Genero gen;
 		String action;
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 		System.out.println("\n\n----Tabla Género----");
 		System.out.println("\n\n[C]rear | [E]ncontrar | [M]odificar | [B]orrar | [L]istar | [A]tras: \n");
 		action = in.readLine();
 		if ((action.length() == 0) || action.toUpperCase().charAt(0) == 'A') {
-          new MenuPrincipal().IniciarPrograma();  
+            
 			return true;
 		}
 
