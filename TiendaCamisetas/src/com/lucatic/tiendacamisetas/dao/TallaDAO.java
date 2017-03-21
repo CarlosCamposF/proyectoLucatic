@@ -10,7 +10,7 @@ public interface TallaDAO extends AutoCloseable {
 
     public void delete(int idtalla) throws DAOException;
 
-    public Talla findById(int idtalla) throws DAOException;
+    public Talla find(int idtalla) throws DAOException;
 
-    public Talla[] getAllTallas() throws DAOException;
+    public Talla[] getAllTablas() throws DAOException;
 }

@@ -11,7 +11,7 @@ public class Camiseta extends Producto{
 	public Camiseta(){
 		}
 	
-	public Camiseta(int idProducto, String descripcion, Categoria idCategoria, Genero idGenero, Talla idTalla, Colores idColor, float precio, int idCamiseta, String dibujo){
+	public Camiseta(int idProducto, String descripcion, Categoria idCategoria, Genero idGenero, Talla idTalla, Color idColor, float precio, int idCamiseta, String dibujo){
 	super();
 	super.setDescripcion(descripcion);
 	super.setIdCategoria(idCategoria);

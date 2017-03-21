@@ -13,46 +13,9 @@ import com.lucatic.tiendacamisetas.model.Talla;
 
 public class TallaDAOJDBCImpl implements TallaDAO {
 
-	@Override
-	public void close() throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+    private Connection con = null;
 
-	@Override
-	public void add(Talla tall) throws DAOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(Talla tall) throws DAOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(int idtalla) throws DAOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Talla findById(int idtalla) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Talla[] getAllTallas() throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-    // Not thread-safe
-  /*  private Connection con = null;
-
-    // package level access
+    
     TallaDAOJDBCImpl() {
         String driverClassName = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://localhost/tiendacamiseta";
@@ -63,7 +26,7 @@ public class TallaDAOJDBCImpl implements TallaDAO {
             Class.forName(driverClassName);
             con = DriverManager.getConnection(url, username, password);
         } catch (SQLException se) {
-            System.out.println("Error obtaining connection with the database: " + se);
+            System.out.println("Error en la conexión con la base de datos: " + se);
             Logger.getLogger(TallaDAOJDBCImpl.class.getName()).log(Level.INFO, null, se);
         
             System.exit(-1);
@@ -72,54 +35,55 @@ public class TallaDAOJDBCImpl implements TallaDAO {
         }
     }
 
-    // Add an Talla record using an INSERT SQL command
+    // AÑADE UNA TALLA EN MYSQL
     public void add(Talla tall) throws DAOException {
         try (Statement stmt = con.createStatement()) {
-            String query = "INSERT INTO TALLA VALUES(" + tall.getIdTalla() + ","
-                    + "'" + tall.getNombre() + ")";
+            String query = "INSERT INTO TALLA (nombre)VALUES('"+tall.getNombre() + "')";
             if (stmt.executeUpdate(query) != 1) {
-                throw new DAOException("Error adding talla");
+                throw new DAOException("Error añadiendo talla");
             }
         } catch (SQLException se) {
-            //se.printStackTrace();
-            throw new DAOException("Error adding talla in DAO", se);
+            
+            throw new DAOException("Error añadiendo talla en DAO", se);
         }
     }
 
-    // Update an talla record with a SQL UPDATE command
+    // ACTUALIZA UNA TALLA EN MYSQL
     public void update(Talla tall) throws DAOException {
         try (Statement stmt = con.createStatement()) {
-            String query = "UPDATE TALLA "
-                    + "SET NOMBRE='" + tall.getNombre() + "',"
+        	String query = "UPDATE TALLA "
+                    + "SET NOMBRE='" + tall.getNombre() + "' "
                   
-                    + "WHERE IDTALLA=" + tall.getIdTalla();
+                    + "WHERE IDTALLA='" + tall.getIdTalla()+"'";
+            
             if (stmt.executeUpdate(query) != 1) {
-                throw new DAOException("Error updating talla");
+                throw new DAOException("Error actualizando talla");
             }
         } catch (SQLException se) {
-            throw new DAOException("Error updating talla in DAO", se);
+            throw new DAOException("Error modificando talla en DAO", se);
         }
     }
 
-    // Delete an employee record that has this ID from the database using the DELETE command
+    // BORRA UNA TALLA EN MYSQL
     public void delete(int idtalla) throws DAOException {
-        Talla tall = findById(idtalla);
+        Talla tall = find(idtalla);
         if (tall == null) {
-            throw new DAOException("Talla id: " + idtalla + " does not exist to delete.");
+            throw new DAOException("Talla id: " + idtalla + " no existe.");
         }
         try (Statement stmt = con.createStatement()) {
             String query = "DELETE FROM TALLA WHERE IDTALLA=" + idtalla;
             if (stmt.executeUpdate(query) != 1) {
-                throw new DAOException("Error deleting talla");
+                throw new DAOException("Error borrando talla");
             }
         } catch (SQLException se) {
-            //se.printStackTrace();
-            throw new DAOException("Error deleting talla in DAO", se);
+            
+            throw new DAOException("Error borrando talla en DAO", se);
         }
     }
 
-    // Find an Talla record using this ID
-    public Talla findById(int id) throws DAOException {
+    
+    // ENCUENTRA UN ID EN MYSQL
+    public Talla find(int id) throws DAOException {
         try (Statement stmt = con.createStatement()) {
             String query = "SELECT * FROM TALLA WHERE IDTALLA=" + id;
             ResultSet rs = stmt.executeQuery(query);
@@ -129,26 +93,24 @@ public class TallaDAOJDBCImpl implements TallaDAO {
             return (new Talla(rs.getInt("IDTALLA"), rs.getString("NOMBRE")));
         } catch (SQLException se) {
             //se.printStackTrace();
-            throw new DAOException("Error finding talla in DAO", se);
+            throw new DAOException("Error encontrando talla en DAO", se);
         }
     }
 
-    // Return an array of all of the Employee records
-    // We are using a collection List object to store the results
-    // This makes it easier to just add to the collection
-    public Talla[] getAllTallas() throws DAOException {
+    
+    public Talla[] getAllTablas() throws DAOException {
         try (Statement stmt = con.createStatement()) {
             String query = "SELECT * FROM TALLA";
             ResultSet rs = stmt.executeQuery(query);
-            // Create an ArrayList to save resulting records
+            
             ArrayList<Talla> tallas = new ArrayList<>();
-            // Iterate through the results and create Employee objects
+            
             while (rs.next()) {
                 tallas.add(new Talla(rs.getInt("IDTALLA"), rs.getString("NOMBRE")));
             }
             return tallas.toArray(new Talla[0]);
         } catch (SQLException se) {
-            //se.printStackTrace();
+            
             throw new DAOException("Error getting all tallas in DAO: " + se.getMessage(), se);
         }
     }
@@ -157,7 +119,7 @@ public class TallaDAOJDBCImpl implements TallaDAO {
         try {
             con.close();
         } catch (SQLException se) {
-            System.out.println ("Exception closing Connection: " + se);
+            System.out.println ("Exception cerrando connexion: " + se);
         }
-    }*/
+    }
 }

@@ -6,12 +6,12 @@ public abstract class Producto {
 	private Categoria idCategoria;
 	private Genero idGenero;
 	private Talla idTalla;
-	private Colores idColor;
+	private Color idColor;
 	private float precio;
 	
 	Producto(){
 	}
-	Producto(int idProducto, String descripcion, Categoria idCategoria, Genero idGenero, Talla idTalla, Colores idColor, float precio){
+	Producto(int idProducto, String descripcion, Categoria idCategoria, Genero idGenero, Talla idTalla, Color idColor, float precio){
 		this.idProducto=idProducto;
 		this.descripcion=descripcion;
 		this.idCategoria=idCategoria;
@@ -61,11 +61,11 @@ public abstract class Producto {
 		this.idTalla = idTalla;
 	}
 
-	public Colores getIdColor() {
+	public Color getIdColor() {
 		return idColor;
 	}
 
-	public void setIdColor(Colores idColor) {
+	public void setIdColor(Color idColor) {
 		this.idColor = idColor;
 	}
 
