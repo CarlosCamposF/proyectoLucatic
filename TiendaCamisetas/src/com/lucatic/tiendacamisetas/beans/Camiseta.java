@@ -1,28 +1,23 @@
 package com.lucatic.tiendacamisetas.beans;
 
-import com.lucatic.tiendacamisetas.model.*;
+import com.lucatic.tiendacamisetas.model.Categoria;
+import com.lucatic.tiendacamisetas.model.Color;
+import com.lucatic.tiendacamisetas.model.Genero;
+import com.lucatic.tiendacamisetas.model.Talla;
 
 public class Camiseta extends Producto{
 	private int idCamiseta;
+	private String nombre;
 	private String dibujo;
 	
+	public Camiseta(){}
 	
-	
-	public Camiseta(){
-		}
-	
-	public Camiseta(int idProducto, String descripcion, Categoria idCategoria, Genero idGenero, Talla idTalla, Color idColor, float precio, int idCamiseta, String dibujo){
-	super();
-	super.setDescripcion(descripcion);
-	super.setIdCategoria(idCategoria);
-	super.setIdColor(idColor);
-	super.setIdGenero(idGenero);
-	super.setIdProducto(idProducto);
-	super.setIdTalla(idTalla);
-	super.setPrecio(precio);
-	this.idCamiseta=idCamiseta;
-	this.dibujo=dibujo;
-		}
+	public Camiseta(int idProducto, String descripcion, Categoria idCategoria, Genero idGenero, Talla idTalla, Color idColor, float precio, int idCamiseta,String nombre,String dibujo){
+		super(idProducto,descripcion,idCategoria,idGenero,idTalla,idColor,precio);
+		this.idCamiseta=idCamiseta;
+		this.nombre = nombre;
+		this.dibujo=dibujo;
+	}
 
 	public int getIdCamiseta() {
 		return idCamiseta;
@@ -32,6 +27,14 @@ public class Camiseta extends Producto{
 		this.idCamiseta = idCamiseta;
 	}
 
+	public String getNombre(){
+		return nombre;
+	}
+	
+	public void setNombre(String nombre){
+		this.nombre = nombre;
+	}
+	
 	public String getDibujo() {
 		return dibujo;
 	}
@@ -46,6 +49,7 @@ public class Camiseta extends Producto{
 		int result = super.hashCode();
 		result = prime * result + ((dibujo == null) ? 0 : dibujo.hashCode());
 		result = prime * result + idCamiseta;
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
 	}
 
@@ -64,6 +68,11 @@ public class Camiseta extends Producto{
 		} else if (!dibujo.equals(other.dibujo))
 			return false;
 		if (idCamiseta != other.idCamiseta)
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
 			return false;
 		return true;
 	}

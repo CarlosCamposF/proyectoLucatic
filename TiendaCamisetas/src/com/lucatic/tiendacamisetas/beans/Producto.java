@@ -1,5 +1,10 @@
 package com.lucatic.tiendacamisetas.beans;
-import com.lucatic.tiendacamisetas.model.*;
+
+import com.lucatic.tiendacamisetas.model.Categoria;
+import com.lucatic.tiendacamisetas.model.Color;
+import com.lucatic.tiendacamisetas.model.Genero;
+import com.lucatic.tiendacamisetas.model.Talla;
+
 public abstract class Producto {
 	private int idProducto;
 	private String descripcion;
@@ -11,6 +16,7 @@ public abstract class Producto {
 	
 	Producto(){
 	}
+	
 	Producto(int idProducto, String descripcion, Categoria idCategoria, Genero idGenero, Talla idTalla, Color idColor, float precio){
 		this.idProducto=idProducto;
 		this.descripcion=descripcion;
@@ -77,6 +83,8 @@ public abstract class Producto {
 		this.precio = precio;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -107,7 +115,10 @@ public abstract class Producto {
 			return false;
 		if (idCategoria != other.idCategoria)
 			return false;
-		if (idColor != other.idColor)
+		if (idColor == null) {
+			if (other.idColor != null)
+				return false;
+		} else if (!idColor.equals(other.idColor))
 			return false;
 		if (idGenero != other.idGenero)
 			return false;
