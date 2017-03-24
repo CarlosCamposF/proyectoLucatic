@@ -38,7 +38,7 @@ public class MenuPrincipal {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         
 		System.out.println("\n----Base de Datos de la Tienda----");
-		System.out.println("\n\n[C]olor | [T]alla | [G]énero | C[A]tegoría | Tipo de [P]ago | [R]ol | [S]alir: ");
+		System.out.println("\n\n[C]olor | [T]alla | [G]énero | C[A]tegoría | Tipo de [P]ago | [R]ol | [D]etalle | [S]alir: ");
 		action = in.readLine();
 		if ((action.length() == 0) || action.toUpperCase().charAt(0) == 'S') {
 			System.out.println("\n\n---Fin de la sesión---");
@@ -82,7 +82,8 @@ public class MenuPrincipal {
 			new RolTestInteractive().IniciarMenuRol();
 
 			break;
-
+		case 'D':
+			new DetalleTestInteractive().iniciarMenuDetalle();
 		}
 
 		return false;
