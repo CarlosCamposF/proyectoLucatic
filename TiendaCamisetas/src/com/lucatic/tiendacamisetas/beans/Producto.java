@@ -26,7 +26,16 @@ public abstract class Producto {
 		this.idColor=idColor;
 		this.precio=precio;
 	}
-
+	
+	Producto(String descripcion, Categoria idCategoria, Genero idGenero, Talla idTalla, Color idColor, float precio){
+		this.descripcion=descripcion;
+		this.idCategoria=idCategoria;
+		this.idGenero=idGenero;
+		this.idTalla=idTalla;
+		this.idColor=idColor;
+		this.precio=precio;
+	}
+	
 	public int getIdProducto() {
 		return idProducto;
 	}
@@ -133,7 +142,7 @@ public abstract class Producto {
 
 	@Override
 	public String toString() {
-		return "Producto [idProducto=" + idProducto + ", descripcion=" + descripcion + ", idCategoria=" + idCategoria
+		return "Producto [descripcion=" + descripcion + ", idCategoria=" + idCategoria
 				+ ", idGenero=" + idGenero + ", idTalla=" + idTalla + ", idColor=" + idColor + ", precio=" + precio
 				+ "]";
 	}

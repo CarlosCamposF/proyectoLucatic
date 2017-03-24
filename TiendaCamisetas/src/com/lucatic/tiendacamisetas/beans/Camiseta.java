@@ -19,6 +19,12 @@ public class Camiseta extends Producto{
 		this.dibujo=dibujo;
 	}
 
+	public Camiseta(String descripcion, Categoria idCategoria, Genero idGenero, Talla idTalla, Color idColor, float precio,String nombre,String dibujo){
+		super(descripcion,idCategoria,idGenero,idTalla,idColor,precio);
+		this.nombre = nombre;
+		this.dibujo=dibujo;
+	}
+	
 	public int getIdCamiseta() {
 		return idCamiseta;
 	}
@@ -79,7 +85,7 @@ public class Camiseta extends Producto{
 
 	@Override
 	public String toString() {
-		return super.toString()+" Camiseta [idCamiseta=" + idCamiseta + ", dibujo=" + dibujo + "]";
+		return super.toString()+" Camiseta [nombre=" + nombre + ", dibujo=" + dibujo + "]";
 	}
 	
 }
