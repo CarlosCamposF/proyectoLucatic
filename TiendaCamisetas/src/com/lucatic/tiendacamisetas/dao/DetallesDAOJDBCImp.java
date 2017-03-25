@@ -25,7 +25,7 @@ public class DetallesDAOJDBCImp implements DetallesDAO {
 		String url = "jdbc:mysql://localhost/tiendacamiseta";
 		String username = "root";
 		String password = "1111";
-
+		//creamos la sesion de la bbdd y cargamos el driver
 		try {
 			Class.forName(driverClassName);
 			con = DriverManager.getConnection(url, username, password);
@@ -40,19 +40,24 @@ public class DetallesDAOJDBCImp implements DetallesDAO {
 	}
 
 	public void addItem(Detalle det) throws DAOException {
+		/*
+		 * Este metodo es para agregar detalles a nuestra base de datos
+		 */
 		try (Statement stmt = con.createStatement()) {
-			String query = "INSERT INTO detalle_compra (producto,cantidad,precio)VALUES('"
-					+ det.getProducto().getIdProducto() + det.getCantidad() + det.getPrecio() + "')";
+			String query = "INSERT INTO detalle_compra (producto,cantidad,precio,factura)VALUES('"
+					+ det.getProducto().getIdProducto() + "','" + det.getCantidad() + "','" + det.getPrecio() + "','"
+					+ 1 + "')";
 			if (stmt.executeUpdate(query) != 1) {
 				throw new DAOException("Error añadiendo detalle");
 			}
 		} catch (SQLException se) {
-
+			se.printStackTrace();
 			throw new DAOException("Error añadiendo detalle en DAO", se);
 		}
 	}
 
 	public void updateItem(Detalle det) throws DAOException {
+		//Metodo para realizar modificaciones de detalles en la base de datos (hay que testearlo con la web)
 		try (Statement stmt = con.createStatement()) {
 			String query = "UPDATE detalle_compra " + "SET producto='" + det.getProducto() + "' and SET cantidad='"
 					+ det.getCantidad() + "' and SET precio='" + det.getPrecio()
@@ -68,6 +73,9 @@ public class DetallesDAOJDBCImp implements DetallesDAO {
 	}
 
 	public void removeItem(int idDetalle) throws DAOException {
+		/*
+		 * Metodo para eliminar un item buscandolo por el id
+		 */
 		Detalle det = find(idDetalle);
 		if (det == null) {
 			throw new DAOException("detalle id: " + idDetalle + " no existe.");
@@ -84,6 +92,10 @@ public class DetallesDAOJDBCImp implements DetallesDAO {
 	}
 
 	public Detalle find(int idDetalle) throws DAOException {
+		/*
+		 * Pasamos un ID de detalle y mostramos el detalle en si
+		 * 
+		 */
 		try (Statement stmt = con.createStatement()) {
 			int iddetalle1 = 0;
 			int cantidad = 0;
@@ -122,58 +134,29 @@ public class DetallesDAOJDBCImp implements DetallesDAO {
 		}
 	}
 
-	public Detalle[] getAllTablas() throws DAOException {
+	public ArrayList<Detalle> getAllTablas() throws DAOException {
+		/*
+		 * Listamos todos los detalles que tenemos en nuestra base de datos.
+		 */
 		try (Statement stmt = con.createStatement()) {
 			String query = "SELECT * FROM DETALLE_COMPRA";
-			ResultSet rs = stmt.executeQuery(query);
+			ArrayList<Detalle> detalles = new ArrayList<>();
+			int iddetalle1 = 0;
+			int cantidad = 0;
+			float precio = 0;
+			int producto2 = 0;
+			ResultSet rs1 = stmt.executeQuery(query);
+			Detalle detalle = null;
+			while (rs1.next()) {
+				detalles.add(find(rs1.getInt("iddetalle_compra")));
 
-			ArrayList<Detalle> detalle = new ArrayList<>();
-			ArrayList<Categoria> categoria = new ArrayList<>();
-			ArrayList<Talla> tallas = new ArrayList<>();
-			ArrayList<Color> color = new ArrayList<>();
-			ArrayList<Genero> gemero = new ArrayList<>();
-
-			while (rs.next()) {
-				String query1 = "SELECT * FROM detalle_compra WHERE idDetalle_compra=" + rs.getInt("IDDETALLE_COMPRA");
-				ResultSet rs1 = stmt.executeQuery(query1);
-				String query2 = "SELECT * FROM producto, camiseta WHERE idproducto=" + rs1.getInt("producto");
-				ResultSet rs2 = stmt.executeQuery(query2);
-				String query3 = "SELECT * FROM GENERO WHERE IDGENERO=" + rs2.getInt("GENERO");
-				ResultSet rs3 = stmt.executeQuery(query3);
-
-				Genero gen = new Genero(rs3.getInt("IDGENERO"), rs3.getString("NOMBRE"));
-
-				String query4 = "SELECT * FROM TALLA WHERE idtalla=" + rs2.getInt("talla");
-				ResultSet rs4 = stmt.executeQuery(query4);
-
-				Talla talla = new Talla(rs4.getInt("idtalla"), rs4.getString("NOMBRE"));
-
-				String query5 = "SELECT * FROM COLOR WHERE idcolor=" + rs2.getInt("color");
-				ResultSet rs5 = stmt.executeQuery(query5);
-
-				Color color1 = new Color(rs5.getInt("COLOR"), rs5.getString("NOMBRE"));
-
-				String query6 = "SELECT * FROM categoria WHERE idcategoria=" + rs2.getInt("categoria");
-				ResultSet rs6 = stmt.executeQuery(query6);
-
-				Categoria categoria1 = new Categoria(rs6.getInt("IDCATEGORIA"), rs6.getString("NOMBRE"));
-
-				Producto p = new Camiseta(rs2.getInt("idProducto"), rs2.getString("DESCRIPCION"), categoria1, gen,
-						talla, color1, rs2.getFloat("PRECIO"), rs2.getInt("IDCAMISETA"), rs2.getString("NOMBRE"),
-						rs2.getString("DIBUJO"));
-
-				// Detalle e= new
-				// Detalle(rs1.getInt("IDDETALLE_COMPRA"),p,rs1.getInt("CANTIDAD"),rs1.getFloat("PRECIO"));
-				detalle.add(
-						new Detalle(rs1.getInt("IDDETALLE_COMPRA"), p, rs1.getInt("CANTIDAD"), rs1.getFloat("PRECIO")));
-
-				// detalle.add(new
-				// Detalle(rs.getInt("IDDETALLE_COMPRA"),rs.getInt("CANTIDAD"),
-				// rs.getFloat("PRECIO"), rs.getInt("FACTURA"),
-				// rs.getInt("PRODUCTO")));
 			}
-			return detalle.toArray(new Detalle[0]);
+
+			return detalles;
+
 		} catch (SQLException se) {
+			se.getMessage();
+			se.printStackTrace();
 
 			throw new DAOException("Error obteniendo Detalles en DAO: " + se.getMessage(), se);
 		}

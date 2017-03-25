@@ -15,7 +15,8 @@ public class Detalle {
 		this.idDetalle = idDetalle;
 		this.producto = producto;
 		this.cantidad = cantidad;
-		this.precio = precio;
+		
+		this.precio = precio*cantidad;
 	}
 
 	public int getIdDetalle() {

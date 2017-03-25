@@ -3,17 +3,21 @@ package com.lucatic.tiendacamisetas.control;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import com.lucatic.tiendacamisetas.beans.Detalle;
+import com.lucatic.tiendacamisetas.beans.Producto;
 import com.lucatic.tiendacamisetas.dao.DAOException;
 import com.lucatic.tiendacamisetas.dao.DetallesDAO;
 import com.lucatic.tiendacamisetas.dao.DetallesDAOFactory;
 import com.lucatic.tiendacamisetas.dao.DetallesDAOJDBCImp;
 import com.lucatic.tiendacamisetas.dao.GestorDAO;
+import com.lucatic.tiendacamisetas.dao.ProductoDAOImp;
 import com.lucatic.tiendacamisetas.model.Categoria;
 
 public class DetalleTestInteractive {
 	static DetallesDAOJDBCImp jdbc = new DetallesDAOJDBCImp();
+	static ProductoDAOImp producto = new ProductoDAOImp();
 	public void iniciarMenuDetalle() {
 		DetallesDAOFactory factory = new DetallesDAOFactory();
 		boolean timeToQuitDetalle = false;
@@ -44,7 +48,7 @@ public class DetalleTestInteractive {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 		System.out.println("\n\n----Tabla Detalles----");
-		System.out.println("\n\n[C]rear | [E]ncontrar | [M]ostrar Todo | [B]orrar | [L]istar | [A]tras: \n");
+		System.out.println("\n\n[C]rear | [E]ncontrar | [M]ostrar Todo | [B]orrar | [A]tras: \n");
 		action = in.readLine();
 
 		if ((action.length() == 0) || action.toUpperCase().charAt(0) == 'A') {
@@ -54,22 +58,27 @@ public class DetalleTestInteractive {
 			
 		}
 		switch (action.toUpperCase().charAt(0)) {
-		
+		//MENU CREAR DETALLE**************************************************************
 		case 'C':
+			System.out.println("Indica el id del producto que quieres agregar");
+			int idcreate = new Integer(in.readLine().trim());
+			System.out.println("Indica la cantidad");
+			int cantidad = new Integer(in.readLine().trim());
+			Producto p =producto.findById(idcreate);
+			float precio = p.getPrecio();
+			Detalle detalle = new Detalle(1,p,cantidad,precio);
+			detalle.toString();
+			jdbc.addItem(detalle);
+			System.out.println(detalle.toString());
+			break;
 			
-			/*//det =
-			//dao.add(det);
 
-			System.out.println("\n\nCategoría " + det.getCantidad() + " introducida correctamente:");
-
-			break;*/
-
-		// MENÚ LEER CATEGORIA ****************************************************
+		// MENÚ LEER DETALLE ****************************************************
 		case 'E':
 			System.out.println("Por favor, introduce el valor del ID a localizar:");
-			int id= new Integer(in.readLine().trim());
+			int idfind= new Integer(in.readLine().trim());
 			int id1=1;
-			Detalle mostrar=jdbc.find(id);
+			Detalle mostrar=jdbc.find(idfind);
 			if (mostrar != null) {
 				System.out.println(mostrar.toString() + "\n");
 			} else {
@@ -80,42 +89,25 @@ public class DetalleTestInteractive {
 
 		// MENÚ MODIFICAR CATEGORIA ***********************************************
 		case 'M':
-			Detalle[] jdbc2 = (Detalle[]) new DetallesDAOJDBCImp().getAllTablas();
-			for(Detalle d:jdbc2){
-				d.toString();
+			ArrayList<Detalle> d = jdbc.getAllTablas(); 
+			for(Detalle de:d){
+				System.out.println(de.toString());
 			}
-			/*System.out.println("Por favor, introduce el valor del ID a modificar:");
-			idDetalle = new Integer(in.readLine().trim());
-
-			det = null;
-			det = dao.find(idDetalle);
-			if (det == null) {
-				System.out.println("\n\nCategoría " + idDetalle + " no encontrada");
-			}
-			det = inputCategoria(in, det);
-			dao.update(det);
-			System.out.println("Cantidad modificada a [" + det.getCantidad()() + "] correctamente.");
+			
 			break;
-*/
-		// MENÚ BORRAR CATEGORIA ***************************************************
+
+		// MENÚ BORRAR DETALLE ***************************************************
 		case 'B':
-			/*System.out.println("Introduce el ID que desea borrar: ");
-			idCategoria = new Integer(in.readLine().trim());
+			System.out.println("Introduce el ID que desea borrar: ");
+			int idborrar= new Integer(in.readLine().trim());
+			jdbc.find(idborrar);
+			jdbc.removeItem(idborrar);
+			System.out.println("ID " + idborrar + " borrada correctamente.");
+			jdbc.find(idborrar);
+			break;
 
-			dao.delete(idCategoria);
-			System.out.println("ID " + idCategoria + " borrada correctamente.");
-			break;
-*/
 		// MENÚ LISTAR COLORES
-		case 'L':
-			/*Categoria[] allCategoria = det.getAllTablas();
-			for (Categoria categoria : allCategoria) {
-				System.out.println(categoria + "\n");
-			}
-			break;
-		}
-*/
-		
+				
 		}
 		return false;
 	}
