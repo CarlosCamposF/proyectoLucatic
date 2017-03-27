@@ -6,21 +6,40 @@ public class Usuario {
 	
 	private Rol rol;
 	private int idUsuario;
-	private String nombre;
+	private String nombreUsuario;
 	private String password;
-	private String usuario;
 	private String cuentaCorreo;
-	
+	private int roll;
 	public Usuario(){
 		
 	}
-	public Usuario(Rol rol, int idUsuario, String nombre, String password, String usuario, String cuentaCorreo){
+	public Usuario(int idUsuario, String nombreUsuario, String password, String cuentaCorreo, Rol rol){
 		this.cuentaCorreo=cuentaCorreo;
 		this.idUsuario=idUsuario;
-		this.nombre=nombre;
+		this.nombreUsuario=nombreUsuario;
 		this.password=password;
 		this.rol=rol;
-		this.usuario=usuario;
+	}
+	
+	public Usuario(int idUsuario, String nombreUsuario, String password, String cuentaCorreo, int roll){
+		this.cuentaCorreo=cuentaCorreo;
+		this.idUsuario=idUsuario;
+		this.nombreUsuario=nombreUsuario;
+		this.password=password;
+		this.roll=roll;
+	}
+	public Usuario(String nombreUsuario, String password, String cuentaCorreo, Rol rol){
+		this.cuentaCorreo=cuentaCorreo;
+		this.nombreUsuario=nombreUsuario;
+		this.password=password;
+		this.rol=rol;
+	}
+	
+	public Usuario(String nombreUsuario, String password, String cuentaCorreo, int roll){
+		this.cuentaCorreo=cuentaCorreo;
+		this.nombreUsuario=nombreUsuario;
+		this.password=password;
+		this.roll=roll;
 	}
 	
 	public Rol getRol() {
@@ -29,17 +48,24 @@ public class Usuario {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
+	public int getRoll() {
+		return roll;
+	}
+	public void setRoll(int roll) {
+		this.roll = roll;
+	}
+	
 	public int getIdUsuario() {
 		return idUsuario;
 	}
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-	public String getNombre() {
-		return nombre;
+	public String getNombreUsuario() {
+		return nombreUsuario;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
 	}
 	public String getPassword() {
 		return password;
@@ -47,28 +73,26 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
+	
 	public String getCuentaCorreo() {
 		return cuentaCorreo;
 	}
 	public void setCuentaCorreo(String cuentaCorreo) {
 		this.cuentaCorreo = cuentaCorreo;
 	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cuentaCorreo == null) ? 0 : cuentaCorreo.hashCode());
 		result = prime * result + idUsuario;
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((nombreUsuario == null) ? 0 : nombreUsuario.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((rol == null) ? 0 : rol.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		
+		
 		return result;
 	}
 	@Override
@@ -87,10 +111,10 @@ public class Usuario {
 			return false;
 		if (idUsuario != other.idUsuario)
 			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
+		if (nombreUsuario == null) {
+			if (other.nombreUsuario != null)
 				return false;
-		} else if (!nombre.equals(other.nombre))
+		} else if (!nombreUsuario.equals(other.nombreUsuario))
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -99,17 +123,12 @@ public class Usuario {
 			return false;
 		if (rol != other.rol)
 			return false;
-		if (usuario == null) {
-			if (other.usuario != null)
-				return false;
-		} else if (!usuario.equals(other.usuario))
-			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "Usuario [rol=" + rol + ", idUsuario=" + idUsuario + ", nombre=" + nombre + ", password=" + password
-				+ ", usuario=" + usuario + ", cuentaCorreo=" + cuentaCorreo + "]";
+		return "UsuarioID:   "+idUsuario+"\nNombreUsuario: "+nombreUsuario+"\nRol: " + rol + "\nPassword: " + password
+				+ "\nCuentaCorreo: " + cuentaCorreo;
 	}
 	
 }

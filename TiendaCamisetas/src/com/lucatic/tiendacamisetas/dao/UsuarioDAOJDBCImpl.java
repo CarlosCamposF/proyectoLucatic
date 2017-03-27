@@ -11,12 +11,12 @@ import java.util.logging.Logger;
 import com.lucatic.tiendacamisetas.beans.Usuario;
 import com.lucatic.tiendacamisetas.model.Rol;
 
-public class UsuarioDAOImpl implements UsuarioDAO{
+public class UsuarioDAOJDBCImpl implements GestorDAO<Usuario>{
 
 	private Connection con = null;
 
     //CONEXIÓN CON LA BASE DE DATOS**********************************
-    UsuarioDAOImpl() {
+    UsuarioDAOJDBCImpl() {
         String driverClassName = "com.mysql.jdbc.Driver";
         String url = "jdbc:mysql://localhost/tiendacamiseta";
         String username = "root";
@@ -42,7 +42,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	public void addItem(Usuario item) throws DAOException {
 		try(Statement stmt=con.createStatement()){
 			String query = "INSERT INTO USUARIO (nombre,password,correo,rol) values('"+
-		item.getNombreUsuario()+"','"+item.getPassword()+"','"+item.getCuentaCorreo()+"','"+item.getRol()+"')";
+		item.getNombreUsuario()+"','"+item.getPassword()+"','"+item.getCuentaCorreo()+"','"+item.getRoll()+"')";
 			if (stmt.executeUpdate(query)!=1){
 				throw new DAOException("Error añadiendo Usuario");
 			}
@@ -54,7 +54,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@Override
 	public void removeItem(int item) throws DAOException {
-		Usuario usu = find(item);
+		Usuario usu = findById(item);
 		if(usu==null){
 			throw new DAOException("Usuario id: "+item+"no existe.");
 		}
@@ -72,12 +72,15 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 //update usuario set nombre='pepe',correo='pepe@gmail.com' where idusuario='11'
 	@Override
 	public void updateItem(Usuario item) throws DAOException {
+		System.out.println("USUARIO"+item);
 		try(Statement stmt=con.createStatement()){
-			String query = "UPDATE USUARIO"
-			+"SET NOMBRE='"+item.getNombreUsuario()+"',"
-			+"SET PASSWORD='"+item.getPassword()+"',"
-			+"SET CORREO='"+item.getCuentaCorreo()+"',"
-			+"SET ROL='"+item.getRol()+"' WHERE IDUSUARIO='"+item.getIdUsuario()+"'";
+			String query = "UPDATE USUARIO"+" SET NOMBRE='"+item.getNombreUsuario()+"' WHERE IDUSUARIO='"+item.getIdUsuario()+"'";
+			
+			query = "UPDATE USUARIO"+" SET PASSWORD='"+item.getPassword()+"' WHERE IDUSUARIO='"+item.getIdUsuario()+"'";
+			
+			query = "UPDATE USUARIO"+" SET CORREO='"+item.getCuentaCorreo()+"' WHERE IDUSUARIO='"+item.getIdUsuario()+"'";
+			
+			
 			if (stmt.executeUpdate(query)!=1){
 			}
 			}catch(SQLException se){
@@ -95,7 +98,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 
 	@Override
-	public Usuario find(int idUsuario) throws DAOException {
+	public Usuario findById(int idUsuario) throws DAOException {
 		try(Statement stmt=con.createStatement()){
 			String query="SELECT * FROM USUARIO,ROL WHERE ROL=IDROL AND IDUSUARIO="+idUsuario;
 			ResultSet rs=stmt.executeQuery(query);
@@ -109,6 +112,15 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			throw new DAOException("Error encontrado Usuario en DAO",se);
 			
 		}
+	}
+
+
+
+
+	@Override
+	public void close() throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 		
 		
