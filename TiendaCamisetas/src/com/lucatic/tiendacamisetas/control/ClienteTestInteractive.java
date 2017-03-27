@@ -4,29 +4,35 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 
 import com.lucatic.tiendacamisetas.beans.Camiseta;
+import com.lucatic.tiendacamisetas.beans.Cliente;
 import com.lucatic.tiendacamisetas.beans.Producto;
+import com.lucatic.tiendacamisetas.beans.Usuario;
+import com.lucatic.tiendacamisetas.dao.ClienteDAO;
+import com.lucatic.tiendacamisetas.dao.ClienteDAOFactory;
 import com.lucatic.tiendacamisetas.dao.DAOException;
-import com.lucatic.tiendacamisetas.dao.ProductoDAO;
-import com.lucatic.tiendacamisetas.dao.ProductoDAOFactory;
+import com.lucatic.tiendacamisetas.dao.UsuarioDAO;
+import com.lucatic.tiendacamisetas.dao.UsuarioDAOFactory;
 import com.lucatic.tiendacamisetas.model.Categoria;
 import com.lucatic.tiendacamisetas.model.Color;
 import com.lucatic.tiendacamisetas.model.Genero;
+import com.lucatic.tiendacamisetas.model.Rol;
 import com.lucatic.tiendacamisetas.model.Talla;
 
-public class ProductoTestInteractive {
-	public void IniciarMenuProducto() {
-		ProductoDAOFactory factory = new ProductoDAOFactory();
-
+public class ClienteTestInteractive {
+	public void IniciarMenuCliente() {
+		ClienteDAOFactory factory = new ClienteDAOFactory();
+		UsuarioDAOFactory factory2 = new UsuarioDAOFactory();
+		
         boolean timeToQuit = false;
         try (
-        		ProductoDAO dao = factory.createProductoDAO();
+        		ClienteDAO dao = factory.createClienteDAO();
+        		UsuarioDAO dao2 = factory2.createUsuarioDAO();
                 BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
             do {
                 try {
-                    timeToQuit = executeMenu(in, dao);
+                    timeToQuit = executeMenu(in, dao,dao2);
                 } catch (DAOException e) {
                     System.out.println("Error " + e.getClass().getName());
                     System.out.println("Message: " + e.getMessage());
@@ -41,8 +47,8 @@ public class ProductoTestInteractive {
         }
     }
 	
-	public static boolean executeMenu(BufferedReader in, ProductoDAO dao) throws IOException, DAOException {
-		 Producto producto;
+	public static boolean executeMenu(BufferedReader in, ClienteDAO dao,UsuarioDAO dao2) throws IOException, DAOException {
+		 Cliente cliente;
 	        String action;
 	        int id;
 
@@ -55,16 +61,17 @@ public class ProductoTestInteractive {
 	        switch (action.toUpperCase().charAt(0)) {
 	            // Create a new employee record
 	            case 'C':
-	               // producto = inputProduct(in);
-	                Categoria categoria = new Categoria(1,"camiseta");
-	                Genero genero = new Genero(1,"masculino");
-	                Talla talla = new Talla(1,"XS");
-	                Color color = new Color(1,"Amarillo");
-	                
-	                Producto p = new Camiseta("camiseta tirantes",categoria,genero,talla,color,39,"camiseta rota","jumanji");
-	                dao.addItem(p);
-	                System.out.println("Successfully added Producto Record: " + p.getIdProducto());
-	                System.out.println("\n\nCreated " + p);
+	               // cliente = inputProduct(in);
+	            	Rol rol = new Rol(1,"Administrador");
+	            	Usuario usuario = new Usuario("carloscf4","1234",rol);
+	           
+	            	
+	            	dao2.addItem(usuario);
+	            	Usuario user = dao2.findByNom(usuario.getNombreUsuario());
+	             	cliente = new Cliente("Carlos","Campos","3303942d","Alcobendas","carlos@mail.com",293033,39393,user);
+	                dao.addItem(cliente);
+	                System.out.println("Successfully added Producto Record: " + cliente.getIdCliente());
+	                System.out.println("\n\nCreated " + cliente);
 	                break;
 
 	            // Display an product record
@@ -73,9 +80,9 @@ public class ProductoTestInteractive {
 	                id = new Integer(in.readLine().trim());
 
 	                // Find this product record
-	                producto = dao.findById(id);
-	                if (producto != null) {
-	                    System.out.println(producto + "\n");
+	                cliente = dao.findById(id);
+	                if (cliente != null) {
+	                    System.out.println(cliente + "\n");
 	                } else {
 	                    System.out.println("\n\nProduct " + id + " not found");
 	                    break;
@@ -88,22 +95,17 @@ public class ProductoTestInteractive {
 	                System.out.println("Enter int value for product id: ");
 	                id = new Integer(in.readLine().trim());
 	                // Find this Product record
-	                Categoria categoria2 = new Categoria(1,"camiseta");
-	                Genero genero2 = new Genero(1,"masculino");
-	                Talla talla2 = new Talla(1,"XS");
-	                Color color2 = new Color(1,"Amarillo");
-	                
-	                Producto p2 = new Camiseta(id,"camiseta tirantes",categoria2,genero2,talla2,color2,39,23,"camiseta rota","jumanji");
-	                producto = dao.findById(id);
-	                if (producto == null) {
+	      
+	                cliente = dao.findById(id);
+	                if (cliente == null) {
 	                    System.out.println("\n\nProduct " + id + " not found");
 	                    break;
 	                }
 	                // Go through the record to allow changes
 	                //p2.setIdProducto(id);
 	                //producto = inputProduct(in, producto);
-	                dao.updateItem(p2);
-	                System.out.println("Successfully updated Product Record: " + p2.getIdProducto());
+	                dao.updateItem(cliente);
+	                System.out.println("Successfully updated Product Record: " + cliente.getIdCliente());
 	                break;
 
 	            // Delete an product record
@@ -118,11 +120,12 @@ public class ProductoTestInteractive {
 
 	            // Display a list (Read the records) of Product
 	            case 'L':
-	            	int tall = new Integer(in.readLine().trim());
-	                ArrayList<Producto> allProd = dao. findCamisetaByGenero(tall);
+	            	
+	            	/*int id = new Integer(in.readLine().trim());
+	                ArrayList<Producto> allProd = dao. findCamisetaByColor(tall);
 	                for (Producto product : allProd) {
 	                    System.out.println(product + "\n");
-	                }
+	                }*/
 	                break;
 	        }
 

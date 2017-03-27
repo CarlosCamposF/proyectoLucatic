@@ -1,33 +1,46 @@
 package com.lucatic.tiendacamisetas.beans;
 
 public class Cliente {
-
-	private int idUsuario;
+	private Usuario usuario;
 	private int idCliente;
 	private String nombre;
 	private String apellidos;
 	private String dni;
 	private String direccion;
-	private String telefono1;
-	private String telefono2=null;
+	private String correo;
+	private int telefono1;
+	private int telefono2;
 	
+	public Cliente (){}
 	
-	public Cliente (){
-			}
-	public Cliente(int idUsuario, int idCliente, String nombre, String apellidos, String dni, String direccion, String telefono1){
-		this.idUsuario=idUsuario;
+	public Cliente(int idCliente, String nombre, String apellidos, String dni, String direccion,String correo, int telefono1,int telefono2,Usuario usuario){
 		this.idCliente=idCliente;
 		this.apellidos=apellidos;
 		this.direccion=direccion;
 		this.nombre=nombre;
 		this.dni=dni;
+		this.correo =correo;
 		this.telefono1=telefono1;
+		this.telefono2=telefono2;
+		this.usuario=usuario;
 	}
-	public int getIdUsuario() {
-		return idUsuario;
+	
+	public Cliente(String nombre, String apellidos, String dni, String direccion,String correo, int telefono1,int telefono2,Usuario usuario){
+		this.apellidos=apellidos;
+		this.direccion=direccion;
+		this.nombre=nombre;
+		this.dni=dni;
+		this.correo = correo;
+		this.telefono1=telefono1;
+		this.telefono2=telefono2;
+		this.usuario=usuario;
 	}
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	public int getIdCliente() {
 		return idCliente;
@@ -59,18 +72,28 @@ public class Cliente {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	public String getTelefono1() {
+	
+	public String getCorreo(){
+		return correo;
+	}
+	
+	public void setCorreo(String correo){
+		this.correo = correo;
+	}
+
+	public int getTelefono1() {
 		return telefono1;
 	}
-	public void setTelefono1(String telefono1) {
+	public void setTelefono1(int telefono1) {
 		this.telefono1 = telefono1;
 	}
-	public String getTelefono2() {
+	public int getTelefono2() {
 		return telefono2;
 	}
-	public void setTelefono2(String telefono2) {
+	public void setTelefono2(int telefono2) {
 		this.telefono2 = telefono2;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,12 +102,13 @@ public class Cliente {
 		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result + ((dni == null) ? 0 : dni.hashCode());
 		result = prime * result + idCliente;
-		result = prime * result + idUsuario;
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + ((telefono1 == null) ? 0 : telefono1.hashCode());
-		result = prime * result + ((telefono2 == null) ? 0 : telefono2.hashCode());
+		result = prime * result + telefono1;
+		result = prime * result + telefono2;
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -111,30 +135,27 @@ public class Cliente {
 			return false;
 		if (idCliente != other.idCliente)
 			return false;
-		if (idUsuario != other.idUsuario)
-			return false;
 		if (nombre == null) {
 			if (other.nombre != null)
 				return false;
 		} else if (!nombre.equals(other.nombre))
 			return false;
-		if (telefono1 == null) {
-			if (other.telefono1 != null)
-				return false;
-		} else if (!telefono1.equals(other.telefono1))
+		if (telefono1 != other.telefono1)
 			return false;
-		if (telefono2 == null) {
-			if (other.telefono2 != null)
+		if (telefono2 != other.telefono2)
+			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
 				return false;
-		} else if (!telefono2.equals(other.telefono2))
+		} else if (!usuario.equals(other.usuario))
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return "Cliente [idUsuario=" + idUsuario + ", idCliente=" + idCliente + ", nombre=" + nombre + ", apellidos="
+		return "Cliente [usuario=" + usuario + ", idCliente=" + idCliente + ", nombre=" + nombre + ", apellidos="
 				+ apellidos + ", dni=" + dni + ", direccion=" + direccion + ", telefono1=" + telefono1 + ", telefono2="
 				+ telefono2 + "]";
 	}
-	
 }

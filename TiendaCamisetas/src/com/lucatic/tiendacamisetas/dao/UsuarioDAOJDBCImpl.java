@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import com.lucatic.tiendacamisetas.beans.Usuario;
 import com.lucatic.tiendacamisetas.model.Rol;
 
-public class UsuarioDAOJDBCImpl implements GestorDAO<Usuario>{
+public class UsuarioDAOJDBCImpl implements UsuarioDAO{
 
 	private Connection con = null;
 
@@ -41,12 +41,13 @@ public class UsuarioDAOJDBCImpl implements GestorDAO<Usuario>{
 	@Override
 	public void addItem(Usuario item) throws DAOException {
 		try(Statement stmt=con.createStatement()){
-			String query = "INSERT INTO USUARIO (nombre,password,correo,rol) values('"+
-		item.getNombreUsuario()+"','"+item.getPassword()+"','"+item.getCuentaCorreo()+"','"+item.getRoll()+"')";
+			String query = "INSERT INTO USUARIO (nombre,password,rol) values('"+
+		item.getNombreUsuario()+"','"+item.getPassword()+"',"+item.getRol().getIdRol()+")";
 			if (stmt.executeUpdate(query)!=1){
 				throw new DAOException("Error añadiendo Usuario");
 			}
 		}catch(SQLException se){
+			se.printStackTrace();
 			throw new DAOException("Error añadiendo Usuario en DAO",se);
 		}
 		
@@ -74,12 +75,8 @@ public class UsuarioDAOJDBCImpl implements GestorDAO<Usuario>{
 	public void updateItem(Usuario item) throws DAOException {
 		System.out.println("USUARIO"+item);
 		try(Statement stmt=con.createStatement()){
-			String query = "UPDATE USUARIO"+" SET NOMBRE='"+item.getNombreUsuario()+"' WHERE IDUSUARIO='"+item.getIdUsuario()+"'";
-			
-			query = "UPDATE USUARIO"+" SET PASSWORD='"+item.getPassword()+"' WHERE IDUSUARIO='"+item.getIdUsuario()+"'";
-			
-			query = "UPDATE USUARIO"+" SET CORREO='"+item.getCuentaCorreo()+"' WHERE IDUSUARIO='"+item.getIdUsuario()+"'";
-			
+			String query = "UPDATE USUARIO"+" SET NOMBRE='"+item.getNombreUsuario()+"',PASSWORD='"+item.getPassword()+"' "
+					+ "WHERE IDUSUARIO='"+item.getIdUsuario()+"'";
 			
 			if (stmt.executeUpdate(query)!=1){
 			}
@@ -105,16 +102,32 @@ public class UsuarioDAOJDBCImpl implements GestorDAO<Usuario>{
 			if(!rs.next()){
 				return null;
 			}
-			Rol rol=new Rol(rs.getInt(6),rs.getString(7));
+			Rol rol=new Rol(rs.getInt(5),rs.getString(6));
 			
-			return (new Usuario(rs.getInt("IDUSUARIO"),rs.getString("NOMBRE"),rs.getString("PASSWORD"),rs.getString("CORREO"),rol));
+			return (new Usuario(rs.getInt(1),rs.getString(2),rs.getString(3),rol));
 		}catch(SQLException se){
 			throw new DAOException("Error encontrado Usuario en DAO",se);
 			
 		}
 	}
 
-
+	@Override
+	public Usuario findByNom(String nom) throws DAOException {
+		try(Statement stmt=con.createStatement()){
+			String query="SELECT * FROM USUARIO,ROL WHERE ROL=IDROL AND USUARIO.NOMBRE='"+nom+"'";
+			ResultSet rs=stmt.executeQuery(query);
+			if(!rs.next()){
+				return null;
+			}
+			Rol rol=new Rol(rs.getInt(5),rs.getString(6));
+			
+			return (new Usuario(rs.getInt(1),rs.getString(2),rs.getString(3),rol));
+		}catch(SQLException se){
+			se.printStackTrace();
+			throw new DAOException("Error encontrado Usuario en DAO",se);
+			
+		}
+	}
 
 
 	@Override

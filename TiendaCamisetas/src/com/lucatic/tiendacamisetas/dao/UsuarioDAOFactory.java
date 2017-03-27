@@ -2,7 +2,7 @@ package com.lucatic.tiendacamisetas.dao;
 
 public class UsuarioDAOFactory {
 
-    public GestorDAO createUsuarioDAO() {
+    public UsuarioDAO createUsuarioDAO() {
         return new UsuarioDAOJDBCImpl();
     }
 }

@@ -154,6 +154,43 @@ public class ProductoDAOImp implements ProductoDAO{
             throw new DAOException("Error finding product in DAO", se);
 		}
 	}
+	
+	@Override
+	 public ArrayList<Producto> findCamisetaByGenero(int gene) throws DAOException{
+		ArrayList<Producto> productos = new ArrayList<>();
+		try (Statement st = con.createStatement()){
+			String query =  "SELECT * FROM producto ,camiseta ,talla ,categoria ,color ,genero "
+					+ "WHERE  idproducto = prodid "
+					+ "AND categoria = idcategoria "
+					+ "AND genero = idgenero "
+					+ "AND talla = idtalla "
+					+ "AND color = idcolor "
+					+ "AND genero="+gene;
+			
+			ResultSet rs = st.executeQuery(query);
+		
+			while(rs.next())
+			{
+				if(rs.getInt("categoria") == 1)
+				{
+					Categoria categoria = new Categoria(rs.getInt(14),rs.getString(15));
+					Genero genero = new Genero(rs.getInt(18),rs.getString(19));
+					Talla tal = new Talla(rs.getInt(12),rs.getString(13));
+					Color col = new Color(rs.getInt(16),rs.getString(17));
+					Camiseta c = new Camiseta(rs.getInt(1),rs.getString(2),categoria,genero,tal,col,rs.getFloat(7),rs.getInt(8),rs.getString(9),rs.getString(10));
+					productos.add(c);	
+					
+				}	
+			}
+			
+			return productos;
+			
+		} catch (SQLException se) {
+            //se.printStackTrace();
+            throw new DAOException("Error finding product in DAO", se);
+		}
+	}
+	
 	@Override
 	public void addCamiseta(Producto item) throws DAOException{
 		 try (PreparedStatement stmt = con.prepareStatement("INSERT INTO camiseta (nombre,dibujo,prodid) VALUES (?, ?, ?)")){
