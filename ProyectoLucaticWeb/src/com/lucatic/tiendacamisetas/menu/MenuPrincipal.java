@@ -38,7 +38,7 @@ public class MenuPrincipal {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         
 		System.out.println("\n----Base de Datos de la Tienda----");
-		System.out.println("\n\n[C]olor | [T]alla | [G]énero | C[A]tegoría | Tipo de [P]ago | [R]ol | [D]etalle | [S]alir: ");
+		System.out.println("\n\n [z]Camiseta [U]suario | [x]Cliente | [C]olor | [T]alla | [G]énero | C[A]tegoría | Tipo de [P]ago | [R]ol | [D]etalle | [S]alir: ");
 		action = in.readLine();
 		if ((action.length() == 0) || action.toUpperCase().charAt(0) == 'S') {
 			System.out.println("\n\n---Fin de la sesión---");
@@ -46,6 +46,14 @@ public class MenuPrincipal {
 		}
 
 		switch (action.toUpperCase().charAt(0)) {
+		case 'Z':
+			new ProductoTestInteractive().IniciarMenuProducto();
+		case 'U':
+			new UsuarioTestInteractive().IniciarMenuUsuario();
+			break;
+		case 'X': 
+			new ClienteTestInteractive().IniciarMenuCliente();
+			break;
 		// ACCEDE A MENÚ COLOR **************************************************
 		case 'C':
 			new ColorTestInteractive().IniciarMenuColor();

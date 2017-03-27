@@ -8,35 +8,30 @@ public class Usuario {
 	private int idUsuario;
 	private String nombreUsuario;
 	private String password;
-	private String cuentaCorreo;
 	private int roll;
 	public Usuario(){
 		
 	}
-	public Usuario(int idUsuario, String nombreUsuario, String password, String cuentaCorreo, Rol rol){
-		this.cuentaCorreo=cuentaCorreo;
+	public Usuario(int idUsuario, String nombreUsuario, String password, Rol rol){
 		this.idUsuario=idUsuario;
 		this.nombreUsuario=nombreUsuario;
 		this.password=password;
 		this.rol=rol;
 	}
 	
-	public Usuario(int idUsuario, String nombreUsuario, String password, String cuentaCorreo, int roll){
-		this.cuentaCorreo=cuentaCorreo;
+	public Usuario(int idUsuario, String nombreUsuario, String password, int roll){
 		this.idUsuario=idUsuario;
 		this.nombreUsuario=nombreUsuario;
 		this.password=password;
 		this.roll=roll;
 	}
-	public Usuario(String nombreUsuario, String password, String cuentaCorreo, Rol rol){
-		this.cuentaCorreo=cuentaCorreo;
+	public Usuario(String nombreUsuario, String password, Rol rol){
 		this.nombreUsuario=nombreUsuario;
 		this.password=password;
 		this.rol=rol;
 	}
 	
-	public Usuario(String nombreUsuario, String password, String cuentaCorreo, int roll){
-		this.cuentaCorreo=cuentaCorreo;
+	public Usuario(String nombreUsuario, String password, int roll){
 		this.nombreUsuario=nombreUsuario;
 		this.password=password;
 		this.roll=roll;
@@ -74,19 +69,10 @@ public class Usuario {
 		this.password = password;
 	}
 	
-	public String getCuentaCorreo() {
-		return cuentaCorreo;
-	}
-	public void setCuentaCorreo(String cuentaCorreo) {
-		this.cuentaCorreo = cuentaCorreo;
-	}
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cuentaCorreo == null) ? 0 : cuentaCorreo.hashCode());
 		result = prime * result + idUsuario;
 		result = prime * result + ((nombreUsuario == null) ? 0 : nombreUsuario.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
@@ -104,11 +90,6 @@ public class Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		if (cuentaCorreo == null) {
-			if (other.cuentaCorreo != null)
-				return false;
-		} else if (!cuentaCorreo.equals(other.cuentaCorreo))
-			return false;
 		if (idUsuario != other.idUsuario)
 			return false;
 		if (nombreUsuario == null) {
@@ -127,8 +108,7 @@ public class Usuario {
 	}
 	@Override
 	public String toString() {
-		return "UsuarioID:   "+idUsuario+"\nNombreUsuario: "+nombreUsuario+"\nRol: " + rol + "\nPassword: " + password
-				+ "\nCuentaCorreo: " + cuentaCorreo;
+		return "UsuarioID:   "+idUsuario+"\nNombreUsuario: "+nombreUsuario+"\nRol: " + rol + "\nPassword: " + password;
 	}
 	
 }

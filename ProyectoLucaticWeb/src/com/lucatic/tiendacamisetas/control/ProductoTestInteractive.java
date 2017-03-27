@@ -119,7 +119,7 @@ public class ProductoTestInteractive {
 	            // Display a list (Read the records) of Product
 	            case 'L':
 	            	int tall = new Integer(in.readLine().trim());
-	                ArrayList<Producto> allProd = dao. findCamisetaByColor(tall);
+	                ArrayList<Producto> allProd = dao. findCamisetaByGenero(tall);
 	                for (Producto product : allProd) {
 	                    System.out.println(product + "\n");
 	                }
