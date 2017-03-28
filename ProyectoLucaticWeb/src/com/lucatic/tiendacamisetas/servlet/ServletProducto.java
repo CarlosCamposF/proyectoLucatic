@@ -32,6 +32,7 @@ public class ServletProducto extends HttpServlet {
     		/*ProductoDAOImp producto = new ProductoDAOImp();
     		ArrayList<Producto> listado = new ArrayList<Producto>();*/
     		List <Producto> p = new ProductoDAOImp().AllCamiseta();
+    		
     		HttpSession sesion = request.getSession();
     		
     		request.setAttribute("styles", p); 
